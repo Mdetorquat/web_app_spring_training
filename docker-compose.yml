@@ -1,7 +1,7 @@
 version: "3.9"
 services:
     todolist:
-        build : . #
+        build : . # (1)
         labels:
             - "traefik.http.routers.todolist.rule=PathPrefix(`/app`)"
             - "traefik.http.middlewares.todolist.stripPrefix.prefixes=/app"
@@ -17,3 +17,10 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock:ro
             - ./traefik.toml:/traefik.toml
+    postgres:
+        image: postgres:14.0-alpine
+        container_name: postgres
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: example
